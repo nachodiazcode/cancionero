@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Song, NotationSystem, ThemeMode, ViewMode } from './types/song';
+import { Song, NotationSystem, ThemeMode } from './types/song';
 import { DEFAULT_SONGS } from './data/defaultSongs';
 import { CancioneroNavbar } from './components/CancioneroNavbar';
 import { BookSpreadView } from './components/BookSpreadView';
@@ -33,7 +33,6 @@ export const App: React.FC = () => {
   const [activeSongId, setActiveSongId] = useState<string>('both-page-19');
 
   // Display and music settings
-  const [viewMode, setViewMode] = useState<ViewMode>('book');
   const [notationSystem, setNotationSystem] = useState<NotationSystem>('latin');
   const [theme, setTheme] = useState<ThemeMode>('vintage');
   const [transpose, setTranspose] = useState<number>(0);
@@ -182,11 +181,6 @@ export const App: React.FC = () => {
         onTransposeChange={setTranspose}
         showChords={showChords}
         onToggleChords={() => setShowChords((prev) => !prev)}
-        viewMode={viewMode}
-        onViewModeChange={(mode) => {
-          setViewMode(mode);
-          if (mode === 'book') setActiveSongId('both-page-19');
-        }}
         theme={theme}
         onThemeChange={setTheme}
         isWakeLocked={isWakeLocked}

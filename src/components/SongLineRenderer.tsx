@@ -23,11 +23,11 @@ export const SongLineRenderer: React.FC<SongLineRendererProps> = ({
 }) => {
   const isDark = theme === 'stage';
 
-  // Chord color styling
+  // Chord color styling: striking, crisp, musical
   const chordColorClass = isDark
     ? 'text-amber-400 hover:text-amber-300'
     : theme === 'vintage'
-    ? 'text-vintage-chord hover:text-red-900'
+    ? 'text-[#8b2616] hover:text-red-950'
     : 'text-blue-800 hover:text-blue-950';
 
   const formatChord = (c?: string) => {
@@ -52,7 +52,6 @@ export const SongLineRenderer: React.FC<SongLineRendererProps> = ({
 
   if (line.type === 'chord-only') {
     if (!showChords) return null;
-    // Transpose chords in raw text if formatted as e.g. "rem - FA - DO - SOL"
     const rawText = line.text || '';
     const transposedChordsOnly = rawText.replace(
       /\b(SOL\*?|RE4?|DO9?|SI7?|mim?|sim?|lam?|rem?|dom?|fam?|solm?|LA#?|FA#?m?|MI7?|DO7?|RE7?|LA7?|SOL7?|DO|RE|MI|FA|SOL|LA|SI|[CDEFGAB][#b]?(?:m|maj7|7|sus4|4|9|dim)?)\b/g,
@@ -61,10 +60,10 @@ export const SongLineRenderer: React.FC<SongLineRendererProps> = ({
 
     return (
       <div
-        className="font-mono font-bold tracking-wider my-1 flex flex-wrap gap-2 items-center"
-        style={{ fontSize: `${14 * fontSizeMultiplier}px` }}
+        className="font-mono font-bold tracking-wider my-1.5 flex flex-wrap gap-2 items-center"
+        style={{ fontSize: `${14.5 * fontSizeMultiplier}px` }}
       >
-        <span className={`${chordColorClass} bg-amber-500/10 dark:bg-amber-400/10 px-1.5 py-0.5 rounded cursor-pointer transition-colors`}>
+        <span className={`${chordColorClass} bg-amber-500/10 dark:bg-amber-400/10 px-2 py-0.5 rounded-md cursor-pointer transition-colors shadow-xs`}>
           {transposedChordsOnly}
         </span>
       </div>
@@ -74,7 +73,7 @@ export const SongLineRenderer: React.FC<SongLineRendererProps> = ({
   if (line.type === 'lyric-only') {
     return (
       <div
-        className="font-book text-vintage-ink dark:text-gray-100 leading-relaxed tracking-normal select-text"
+        className="font-book text-vintage-ink dark:text-gray-100 leading-relaxed tracking-normal select-text py-0.5"
         style={{ fontSize: `${18 * fontSizeMultiplier}px` }}
       >
         {line.text}
@@ -85,14 +84,12 @@ export const SongLineRenderer: React.FC<SongLineRendererProps> = ({
   // Type 'lyric-chord': Token-based syllable-anchored layout
   return (
     <div
-      className="flex flex-wrap items-end gap-x-1 gap-y-1.5 my-1 leading-none select-text"
+      className="flex flex-wrap items-end gap-x-1.5 gap-y-2 my-1 leading-none select-text"
       style={{ fontSize: `${18 * fontSizeMultiplier}px` }}
     >
       {line.tokens?.map((token, idx) => {
         const transposed = token.chord ? formatChord(token.chord) : undefined;
         const hasChord = Boolean(transposed && showChords);
-
-        // Check if token contains a tab run like "(VI-0-2-3-V-0)" or "(V-0)"
         const isTabPattern = /\([IVX0-9\-]+\)/.test(token.lyric);
 
         return (
@@ -105,8 +102,8 @@ export const SongLineRenderer: React.FC<SongLineRendererProps> = ({
               <span
                 onClick={() => onChordClick && onChordClick(token.chord!)}
                 title={`Ver diagrama de ${transposed}`}
-                className={`font-mono font-bold leading-none cursor-pointer hover:underline transition-transform active:scale-95 mb-1 ${chordColorClass}`}
-                style={{ fontSize: `${Math.max(12, 14 * fontSizeMultiplier)}px` }}
+                className={`font-mono font-bold leading-none cursor-pointer hover:underline transition-transform active:scale-95 mb-1 select-none pr-1 ${chordColorClass}`}
+                style={{ fontSize: `${Math.max(12, 14.5 * fontSizeMultiplier)}px` }}
               >
                 {transposed}
               </span>
@@ -115,7 +112,9 @@ export const SongLineRenderer: React.FC<SongLineRendererProps> = ({
             {/* Lyric syllable */}
             <span
               className={`font-book text-vintage-ink dark:text-gray-100 leading-tight whitespace-pre ${
-                isTabPattern ? 'font-mono text-sm tracking-tight text-amber-900 dark:text-amber-300 font-semibold' : ''
+                isTabPattern
+                  ? 'font-mono text-sm tracking-tight text-amber-900 dark:text-amber-300 font-semibold px-1 py-0.5 rounded bg-black/5 dark:bg-white/5'
+                  : ''
               }`}
             >
               {token.lyric || '\u00A0'}

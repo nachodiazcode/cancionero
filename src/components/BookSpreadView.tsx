@@ -3,7 +3,6 @@ import { Song, NotationSystem, ThemeMode } from '../types/song';
 import { SongLineRenderer } from './SongLineRenderer';
 import { SectionMarker } from './SectionMarker';
 import { GuitarChordDiagram } from './GuitarChordDiagram';
-import { VintageTotemArt } from './VintageTotemArt';
 import { getChordDiagram } from '../data/chordDatabase';
 
 interface BookSpreadViewProps {
@@ -30,101 +29,100 @@ export const BookSpreadView: React.FC<BookSpreadViewProps> = ({
   const [mobileTab, setMobileTab] = useState<'both' | 'left' | 'right'>('both');
   const isDark = theme === 'stage';
 
-  // Chords for right column diagrams (SOL*, RE4, DO9 as in the original picture)
+  // Chords for right column diagrams (SOL*, RE4, DO9 from original scan)
   const playaGironDiagrams = ['SOL*', 'RE4', 'DO9']
     .map((name) => getChordDiagram(name))
     .filter((d): d is NonNullable<typeof d> => d !== null);
 
+  // Chords for left song (e.g. rem, FA, LA#)
+  const suenoDiagrams = ['SOL', 'rem', 'FA', 'DO']
+    .map((name) => getChordDiagram(name))
+    .filter((d): d is NonNullable<typeof d> => d !== null);
+
   return (
-    <div className="w-full max-w-6xl mx-auto px-2 sm:px-6 py-4 pb-32">
-      {/* Mobile Tab Switcher (Visible only on small screens) */}
-      <div className="flex md:hidden items-center justify-center gap-1 mb-4 p-1 rounded-lg bg-black/5 dark:bg-white/5 border border-amber-900/15">
+    <div className="w-full max-w-7xl mx-auto px-2 sm:px-6 py-4 pb-36">
+      {/* Mobile Tab Switcher */}
+      <div className="flex md:hidden items-center justify-center gap-1 mb-4 p-1 rounded-xl bg-black/5 dark:bg-white/5 border border-amber-900/15">
         <button
           onClick={() => setMobileTab('both')}
-          className={`flex-1 py-1.5 px-2 rounded text-xs font-semibold transition-all ${
+          className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold transition-all ${
             mobileTab === 'both'
               ? 'bg-amber-800 text-white shadow-sm'
-              : 'text-vintage-faded hover:text-vintage-ink'
+              : 'text-vintage-faded hover:text-vintage-ink dark:text-gray-300'
           }`}
         >
-          Vista Completa (2 Canciones)
+          Vista Completa (2 Páginas)
         </button>
         <button
           onClick={() => setMobileTab('left')}
-          className={`flex-1 py-1.5 px-2 rounded text-xs font-semibold transition-all ${
+          className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold transition-all ${
             mobileTab === 'left'
               ? 'bg-amber-800 text-white shadow-sm'
-              : 'text-vintage-faded hover:text-vintage-ink'
+              : 'text-vintage-faded hover:text-vintage-ink dark:text-gray-300'
           }`}
         >
           Sueño con serpientes
         </button>
         <button
           onClick={() => setMobileTab('right')}
-          className={`flex-1 py-1.5 px-2 rounded text-xs font-semibold transition-all ${
+          className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold transition-all ${
             mobileTab === 'right'
               ? 'bg-amber-800 text-white shadow-sm'
-              : 'text-vintage-faded hover:text-vintage-ink'
+              : 'text-vintage-faded hover:text-vintage-ink dark:text-gray-300'
           }`}
         >
           Playa Girón
         </button>
       </div>
 
-      {/* Book Spread Container */}
+      {/* Main Book Card */}
       <div
-        className={`relative rounded-xl p-4 sm:p-8 md:p-10 shadow-book transition-all border ${
+        className={`relative rounded-2xl p-5 sm:p-8 lg:p-12 shadow-book-deep transition-all border ${
           isDark
-            ? 'bg-gray-900 border-gray-800 text-gray-100'
+            ? 'bg-gray-900/95 border-gray-800 text-gray-100 shadow-2xl'
             : theme === 'vintage'
-            ? 'bg-[#f7f2e7] border-vintage-faded/20 text-vintage-ink shadow-book-deep'
-            : 'bg-white border-gray-200 text-gray-900 shadow-md'
+            ? 'bg-[#f8f4ea] border-amber-900/15 text-vintage-ink'
+            : 'bg-white border-gray-200 text-gray-900 shadow-xl'
         }`}
       >
-        {/* Top Header of the spread */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline border-b border-amber-900/15 dark:border-gray-800 pb-3 mb-6">
-          <div className="md:col-span-5">
-            <h2
-              className="font-serif lowercase font-bold tracking-tight text-2xl sm:text-3xl lg:text-4xl text-vintage-ink dark:text-gray-100"
-              style={{ fontSize: `${28 * fontSizeMultiplier}px` }}
-            >
-              {leftSong.title}
-            </h2>
-          </div>
-          <div className="hidden md:block md:col-span-2 text-center text-xs font-serif italic text-vintage-faded/60">
-            página 19
-          </div>
-          <div className="md:col-span-5 text-left md:text-left">
-            <h2
-              className="font-serif lowercase font-bold tracking-tight text-2xl sm:text-3xl lg:text-4xl text-vintage-ink dark:text-gray-100"
-              style={{ fontSize: `${28 * fontSizeMultiplier}px` }}
-            >
-              {rightSong.title}
-            </h2>
-          </div>
-        </div>
+        {/* Subtle book spine center fold line for tablet/desktop */}
+        <div className="hidden md:block absolute top-10 bottom-24 left-1/2 -translate-x-1/2 w-px bg-gradient-to-b from-transparent via-amber-900/15 dark:via-gray-700 to-transparent pointer-events-none" />
 
-        {/* 3-Column Layout: Left Song (5 cols), Center Totem Art (2 cols), Right Song (5 cols) */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-start">
-          {/* ================= LEFT SONG: Sueño con serpientes ================= */}
+        {/* 2-Column Balanced Grid (50% / 50%) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 items-start">
+          
+          {/* ================= PÁGINA IZQUIERDA: Sueño con serpientes ================= */}
           {(mobileTab === 'both' || mobileTab === 'left') && (
-            <div className="md:col-span-5 space-y-4">
-              {/* Epigraph */}
+            <article className="space-y-5 md:pr-4">
+              {/* Header */}
+              <div className="border-b border-amber-900/15 dark:border-gray-800 pb-3">
+                <span className="text-[11px] font-mono uppercase tracking-widest text-vintage-faded/70 dark:text-gray-400 font-semibold block mb-1">
+                  silvio rodríguez
+                </span>
+                <h1
+                  className="font-serif lowercase font-bold tracking-tight text-3xl sm:text-4xl text-vintage-ink dark:text-gray-50 leading-tight"
+                  style={{ fontSize: `${30 * fontSizeMultiplier}px` }}
+                >
+                  {leftSong.title}
+                </h1>
+              </div>
+
+              {/* Epígrafe de Bertolt Brecht */}
               {leftSong.epigraph && (
-                <div className="mb-5 italic font-book text-vintage-faded dark:text-gray-300">
+                <div className="p-3.5 rounded-xl bg-amber-500/5 dark:bg-white/5 border-l-2 border-amber-800/40 dark:border-amber-400/40 italic font-book text-vintage-faded dark:text-gray-300">
                   <p
                     className="whitespace-pre-line leading-relaxed"
                     style={{ fontSize: `${13.5 * fontSizeMultiplier}px` }}
                   >
                     {leftSong.epigraph.quote}
                   </p>
-                  <p className="mt-1.5 text-xs font-serif not-italic font-bold text-vintage-ink dark:text-gray-400">
-                    {leftSong.epigraph.author}
+                  <p className="mt-2 text-xs font-serif not-italic font-bold text-vintage-ink dark:text-gray-300">
+                    — {leftSong.epigraph.author}
                   </p>
                 </div>
               )}
 
-              {/* Sections for Sueño con Serpientes */}
+              {/* Secciones de Sueño con Serpientes */}
               <div className="space-y-4">
                 {leftSong.sections.map((section, sIdx) => (
                   <div key={`left-sec-${sIdx}`} className="space-y-1">
@@ -148,35 +146,64 @@ export const BookSpreadView: React.FC<BookSpreadViewProps> = ({
                   </div>
                 ))}
               </div>
-            </div>
+
+              {/* Diagramas de acordes de apoyo al pie de la canción izquierda */}
+              {showChords && (
+                <div className="pt-4 border-t border-amber-900/10 dark:border-gray-800">
+                  <div className="text-[10px] font-mono uppercase tracking-wider text-vintage-faded dark:text-gray-400 mb-2">
+                    Acordes principales:
+                  </div>
+                  <div className="flex flex-wrap items-center gap-3">
+                    {suenoDiagrams.map((chord) => (
+                      <button
+                        key={`sueno-diag-${chord.name}`}
+                        onClick={() => onChordClick(chord.name)}
+                        className="p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-transform hover:scale-105"
+                        title={`Tocar ${chord.name}`}
+                      >
+                        <GuitarChordDiagram chord={chord} size="sm" theme={theme} />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </article>
           )}
 
-          {/* ================= CENTER COLUMN: Vintage Totem Serpent Art ================= */}
-          <div className="hidden md:flex md:col-span-2 flex-col items-center justify-start sticky top-24 self-start px-1">
-            <VintageTotemArt theme={theme} className="w-full max-w-[130px]" />
-          </div>
-
-          {/* ================= RIGHT SONG: Playa Girón ================= */}
+          {/* ================= PÁGINA DERECHA: Playa Girón ================= */}
           {(mobileTab === 'both' || mobileTab === 'right') && (
-            <div className="md:col-span-5 space-y-4">
-              {/* Introduction chord progression */}
+            <article className="space-y-5 md:pl-4">
+              {/* Header */}
+              <div className="border-b border-amber-900/15 dark:border-gray-800 pb-3">
+                <span className="text-[11px] font-mono uppercase tracking-widest text-vintage-faded/70 dark:text-gray-400 font-semibold block mb-1">
+                  silvio rodríguez
+                </span>
+                <h2
+                  className="font-serif lowercase font-bold tracking-tight text-3xl sm:text-4xl text-vintage-ink dark:text-gray-50 leading-tight"
+                  style={{ fontSize: `${30 * fontSizeMultiplier}px` }}
+                >
+                  {rightSong.title}
+                </h2>
+              </div>
+
+              {/* Introducción */}
               {rightSong.intro && (
                 <div
-                  className="font-mono text-xs sm:text-sm mb-3"
-                  style={{ fontSize: `${13 * fontSizeMultiplier}px` }}
+                  className="p-2.5 rounded-xl bg-amber-500/10 dark:bg-white/5 border border-amber-900/15 dark:border-gray-800 font-mono text-xs sm:text-sm"
+                  style={{ fontSize: `${13.5 * fontSizeMultiplier}px` }}
                 >
                   <span className="font-serif italic text-vintage-faded dark:text-gray-400 mr-2">
                     introducción:
                   </span>
-                  <span className="font-bold text-vintage-chord dark:text-amber-400">
+                  <span className="font-bold text-vintage-chord dark:text-amber-400 tracking-wide">
                     {rightSong.intro}
                   </span>
                 </div>
               )}
 
-              {/* Flex container for lyrics and margin diagrams */}
-              <div className="flex flex-col sm:flex-row gap-4 items-start">
-                {/* Lyrics Area */}
+              {/* Letras y Diagramas en paralelo */}
+              <div className="flex flex-col sm:flex-row gap-6 items-start">
+                {/* Letras de Playa Girón */}
                 <div className="flex-1 space-y-4">
                   {rightSong.sections.map((section, sIdx) => (
                     <div key={`right-sec-${sIdx}`} className="space-y-1">
@@ -201,41 +228,49 @@ export const BookSpreadView: React.FC<BookSpreadViewProps> = ({
                   ))}
                 </div>
 
-                {/* Right Margin Chord Diagrams (SOL*, RE4, DO9 from original scan) */}
-                <div className="hidden sm:flex flex-col items-center gap-3 shrink-0 pt-1">
+                {/* Columna lateral de diagramas de acordes (SOL*, RE4, DO9) */}
+                {showChords && (
+                  <aside className="hidden sm:flex flex-col items-center gap-4 shrink-0 p-3 rounded-xl bg-amber-500/5 dark:bg-white/5 border border-amber-900/10 dark:border-gray-800 self-start">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-vintage-faded dark:text-gray-400 font-bold">
+                      Posiciones
+                    </span>
+                    {playaGironDiagrams.map((chord) => (
+                      <button
+                        key={`playa-diag-${chord.name}`}
+                        onClick={() => onChordClick(chord.name)}
+                        className="cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+                        title={`Ver digitación de ${chord.name}`}
+                      >
+                        <GuitarChordDiagram chord={chord} size="sm" theme={theme} />
+                      </button>
+                    ))}
+                  </aside>
+                )}
+              </div>
+
+              {/* Diagramas para móvil (horizontal abajo) */}
+              {showChords && (
+                <div className="flex sm:hidden items-center justify-around gap-2 pt-4 border-t border-amber-900/10 dark:border-gray-800">
                   {playaGironDiagrams.map((chord) => (
-                    <div
-                      key={`playa-diag-${chord.name}`}
+                    <button
+                      key={`mobile-diag-${chord.name}`}
                       onClick={() => onChordClick(chord.name)}
-                      className="cursor-pointer hover:scale-105 transition-transform"
-                      title={`Ver digitación de ${chord.name}`}
+                      className="cursor-pointer"
                     >
                       <GuitarChordDiagram chord={chord} size="sm" theme={theme} />
-                    </div>
+                    </button>
                   ))}
                 </div>
-              </div>
-
-              {/* Mobile Chord Diagrams (shown horizontally if on mobile screen) */}
-              <div className="flex sm:hidden items-center justify-around gap-2 pt-4 border-t border-amber-900/10">
-                {playaGironDiagrams.map((chord) => (
-                  <div
-                    key={`mobile-diag-${chord.name}`}
-                    onClick={() => onChordClick(chord.name)}
-                    className="cursor-pointer"
-                  >
-                    <GuitarChordDiagram chord={chord} size="sm" theme={theme} />
-                  </div>
-                ))}
-              </div>
-            </div>
+              )}
+            </article>
           )}
+
         </div>
 
-        {/* Spread Footer matching original book: page 19 & "cancionero" */}
-        <div className="mt-12 pt-4 border-t border-amber-900/20 dark:border-gray-800 flex justify-between items-end">
+        {/* Pie de página clásico de cancionero impreso */}
+        <footer className="mt-12 pt-6 border-t border-amber-900/20 dark:border-gray-800 flex justify-between items-end">
           <div className="text-xs italic text-vintage-faded dark:text-gray-400 font-serif">
-            Edición facsimilar restaurada
+            Edición digital facsimilar · Vista libro
           </div>
           <div className="flex flex-col items-end">
             <span className="font-serif font-bold text-3xl sm:text-4xl text-vintage-ink dark:text-gray-100 leading-none">
@@ -245,7 +280,7 @@ export const BookSpreadView: React.FC<BookSpreadViewProps> = ({
               cancionero
             </span>
           </div>
-        </div>
+        </footer>
       </div>
     </div>
   );
