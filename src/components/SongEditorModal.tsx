@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Song, SongSection } from '../types/song';
-import { parseChordProLine } from '../utils/chordTheory';
-import { X, Save, Music, HelpCircle } from 'lucide-react';
+import { parseChordProLine, convertTwoLineChordsToChordPro } from '../utils/chordTheory';
+import { X, Save, Music, HelpCircle, Wand2 } from 'lucide-react';
 
 interface SongEditorModalProps {
   isOpen: boolean;
@@ -40,8 +40,9 @@ export const SongEditorModal: React.FC<SongEditorModalProps> = ({
       return;
     }
 
-    // Parse sections from raw text
-    const lines = rawText.split('\n');
+    // Auto-convert if pasted in LaCuerda / Cifra Club 2-line chord format
+    const processedText = convertTwoLineChordsToChordPro(rawText);
+    const lines = processedText.split('\n');
     const sections: SongSection[] = [];
     let currentSection: SongSection = { lines: [] };
     const discoveredChords = new Set<string>();
@@ -61,6 +62,15 @@ export const SongEditorModal: React.FC<SongEditorModalProps> = ({
 
       if (!trimmed) {
         currentSection.lines.push({ type: 'blank' });
+        continue;
+      }
+
+      // Check for guitar tablature line (e.g. e|---, E|---, B|---)
+      if (/^[eEaAdDgGbB1-6]\|/.test(trimmed)) {
+        currentSection.lines.push({
+          type: 'tab',
+          tabText: rawLine,
+        });
         continue;
       }
 
@@ -205,13 +215,25 @@ export const SongEditorModal: React.FC<SongEditorModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-serif font-bold mb-1">
-              Letra con Acordes
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-xs font-serif font-bold">
+                Letra con Acordes
+              </label>
+              <button
+                type="button"
+                onClick={() => setRawText((prev) => convertTwoLineChordsToChordPro(prev))}
+                className="flex items-center gap-1 text-[11px] font-semibold text-[#e60] hover:text-[#d50] hover:underline"
+                title="Detecta acordes sobre la letra de LaCuerda o Cifra Club y los convierte automáticamente"
+              >
+                <Wand2 className="w-3.5 h-3.5" />
+                <span>Auto-formatear desde LaCuerda / Cifra Club</span>
+              </button>
+            </div>
             <textarea
               rows={9}
               value={rawText}
               onChange={(e) => setRawText(e.target.value)}
+              placeholder="Pega la letra con acordes aquí (formato LaCuerda o [Acorde]Letra)..."
               className="w-full px-3 py-2 rounded-lg border text-xs sm:text-sm font-mono bg-white/70 dark:bg-gray-800 border-amber-900/30 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-700/40"
             />
           </div>

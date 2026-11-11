@@ -2,42 +2,52 @@ import React from 'react';
 import { Song, NotationSystem, ThemeMode } from '../types/song';
 import {
   BookOpen,
-  Image,
   PlusCircle,
   Music,
-  Languages,
+  Sparkles,
+  Menu,
+  Guitar,
 } from 'lucide-react';
 
 interface CancioneroNavbarProps {
   songs: Song[];
   activeSongId: string;
   onSelectSong: (id: string) => void;
-  notationSystem: NotationSystem;
-  onNotationChange: (notation: NotationSystem) => void;
+  notationSystem?: NotationSystem;
+  onNotationChange?: (notation: NotationSystem) => void;
   theme: ThemeMode;
-  onOpenOriginalScan: () => void;
+  onOpenOriginalScan?: () => void;
   onOpenNewSongModal: () => void;
   onOpenChordList: () => void;
+  onOpenTunerModal: () => void;
   pageNumber?: number;
+  isCompactMode?: boolean;
+  isFittedScreen?: boolean;
+  onToggleFitScreen?: () => void;
+  isKaraokeMode?: boolean;
+  onToggleKaraokeMode?: () => void;
+  onToggleSidebar?: () => void;
 }
 
 export const CancioneroNavbar: React.FC<CancioneroNavbarProps> = ({
   songs,
   activeSongId,
   onSelectSong,
-  notationSystem,
-  onNotationChange,
   theme,
-  onOpenOriginalScan,
   onOpenNewSongModal,
   onOpenChordList,
+  onOpenTunerModal,
   pageNumber,
+  isCompactMode = false,
+  isKaraokeMode = false,
+  onToggleKaraokeMode,
+  onToggleSidebar,
 }) => {
   const isDark = theme === 'stage';
 
   return (
     <header
-      className={`sticky top-0 z-30 w-full border-b backdrop-blur-md transition-colors ${
+      className={`sticky top-0 z-50 w-full border-b backdrop-blur-md transition-colors ${
         isDark
           ? 'bg-gray-900/90 border-gray-800 text-gray-100'
           : theme === 'vintage'
@@ -45,19 +55,43 @@ export const CancioneroNavbar: React.FC<CancioneroNavbarProps> = ({
           : 'bg-white/90 border-gray-200 text-gray-900 shadow-sm'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-        {/* Brand / Logo */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-baseline gap-1.5">
-            <span className="font-serif italic text-2xl sm:text-3xl tracking-tight text-vintage-ink dark:text-amber-100 font-bold">
-              cancionero
-            </span>
-            {pageNumber && (
-              <span className="font-mono text-xs text-vintage-faded dark:text-gray-400 font-semibold">
-                p.{pageNumber}
+      <div
+        className={`max-w-7xl mx-auto px-2 sm:px-6 flex items-center justify-between gap-2 transition-all ${
+          isCompactMode ? 'h-11' : 'h-14 sm:h-16'
+        }`}
+      >
+        {/* Brand / Logo + Sidebar Toggle */}
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          {onToggleSidebar && (
+            <button
+              onClick={onToggleSidebar}
+              className="p-1.5 rounded-lg hover:bg-black/10 dark:hover:bg-white/10 text-vintage-faded hover:text-vintage-ink dark:text-gray-300 transition-colors"
+              title="Mostrar / Ocultar menú lateral"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+          )}
+
+          <button
+            onClick={() => onSelectSong('home')}
+            className="flex items-center gap-2 text-left group cursor-pointer focus:outline-none"
+            title="Ir al Inicio / Biblioteca de Canciones"
+          >
+            <div className="flex items-baseline gap-1">
+              <span
+                className={`font-serif italic tracking-tight text-vintage-ink dark:text-amber-100 font-bold group-hover:text-amber-800 dark:group-hover:text-amber-300 transition-colors ${
+                  isCompactMode ? 'text-lg sm:text-2xl' : 'text-2xl sm:text-3xl'
+                }`}
+              >
+                cancionero
               </span>
-            )}
-          </div>
+              {pageNumber && !isCompactMode && activeSongId !== 'home' && (
+                <span className="font-mono text-xs text-vintage-faded dark:text-gray-400 font-semibold">
+                  p.{pageNumber}
+                </span>
+              )}
+            </div>
+          </button>
         </div>
 
         {/* Song Selector */}
@@ -74,7 +108,7 @@ export const CancioneroNavbar: React.FC<CancioneroNavbarProps> = ({
                   : 'bg-gray-50 border-gray-300 text-gray-900'
               }`}
             >
-              <option value="both-page-19">📖 Página 19: Sueño con serpientes + Playa Girón (Libro)</option>
+              <option value="home">🏠 Inicio / Biblioteca de Canciones</option>
               {songs.map((song) => (
                 <option key={song.id} value={song.id}>
                   {song.title} — {song.artist}
@@ -89,19 +123,35 @@ export const CancioneroNavbar: React.FC<CancioneroNavbarProps> = ({
 
         {/* Actions & Utilities */}
         <div className="flex items-center gap-1.5 sm:gap-2">
-          {/* Notation toggle: DO-RE-MI vs C-D-E */}
+          {/* Afinador de Guitarra (Cifra Club Style) */}
           <button
-            onClick={() => onNotationChange(notationSystem === 'latin' ? 'anglo' : 'latin')}
-            className={`px-2.5 py-1.5 rounded-lg border text-xs font-mono font-bold transition-colors flex items-center gap-1 ${
-              isDark
-                ? 'border-gray-700 hover:bg-gray-800'
-                : 'border-amber-900/20 hover:bg-amber-800/10'
-            }`}
-            title="Cambiar sistema de notación: Latino (DO RE MI) o Anglosajón (C D E)"
+            onClick={onOpenTunerModal}
+            className="px-2.5 sm:px-3 py-1.5 rounded-lg border border-[#e60]/30 bg-[#e60]/10 hover:bg-[#e60]/20 text-[#e60] dark:text-[#ff8833] text-xs font-semibold transition-all flex items-center gap-1.5 shadow-xs"
+            title="Abrir Afinador de Guitarra online"
           >
-            <Languages className="w-3.5 h-3.5" />
-            <span>{notationSystem === 'latin' ? 'DO RE MI' : 'C D E'}</span>
+            <Guitar className="w-3.5 h-3.5 text-[#e60]" />
+            <span className="hidden xs:inline">Afinador</span>
           </button>
+
+          {/* Modo Karaoke / Teleprompter Toggle */}
+          {onToggleKaraokeMode && (
+            <button
+              onClick={onToggleKaraokeMode}
+              className={`px-2.5 sm:px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all hidden md:flex items-center gap-1.5 shadow-xs ${
+                isKaraokeMode
+                  ? 'bg-amber-600 text-white border-amber-700 shadow-md ring-2 ring-amber-400/40'
+                  : 'border-amber-900/25 hover:bg-amber-800/10 text-vintage-ink dark:text-gray-200'
+              }`}
+              title={
+                isKaraokeMode
+                  ? 'Modo Teleprompter ACTIVO: enfoca la estrofa actual'
+                  : 'Activar Modo Teleprompter: resalta la estrofa en curso para tocar sin perderte'
+              }
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>{isKaraokeMode ? 'Karaoke ON' : 'Karaoke'}</span>
+            </button>
+          )}
 
           {/* Quick Chords of this song */}
           <button
@@ -117,16 +167,6 @@ export const CancioneroNavbar: React.FC<CancioneroNavbarProps> = ({
             <span>Acordes</span>
           </button>
 
-          {/* View Original Facsimile Scan from photo */}
-          <button
-            onClick={onOpenOriginalScan}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-amber-900/30 bg-amber-500/10 dark:bg-amber-400/10 hover:bg-amber-500/20 transition-all text-amber-950 dark:text-amber-200"
-            title="Ver imagen original del cancionero físico"
-          >
-            <Image className="w-3.5 h-3.5" />
-            <span className="hidden md:inline">Ver Facsímil</span>
-          </button>
-
           {/* Add Song */}
           <button
             onClick={onOpenNewSongModal}
@@ -134,7 +174,7 @@ export const CancioneroNavbar: React.FC<CancioneroNavbarProps> = ({
             title="Añadir una canción propia"
           >
             <PlusCircle className="w-4 h-4" />
-            <span className="hidden sm:inline">Nueva Canción</span>
+            <span className="hidden sm:inline">Nueva</span>
           </button>
         </div>
       </div>

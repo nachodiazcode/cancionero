@@ -10,6 +10,33 @@
     scroll-behavior: smooth;
   }
 
+  /* Cifra Club / LaCuerda Clean Typography & Color Standards */
+  body, div, pre, p, h1, h2 {
+    color: #1b1b1b;
+  }
+
+  .dark body, .dark div, .dark pre, .dark p, .dark h1, .dark h2 {
+    color: #f3f4f6;
+  }
+
+  p {
+    margin: 0 !important;
+    mso-margin-top-alt: 0 !important;
+    mso-margin-bottom-alt: 0 !important;
+  }
+
+  /* Iconic Cifra Club Terracotta Orange for Chords */
+  b, .chord, .cifra-chord {
+    color: #e60 !important;
+    font-weight: 700 !important;
+  }
+
+  a, span.MsoHyperlink {
+    color: #e60;
+    text-decoration: none !important;
+    text-underline: none !important;
+  }
+
   /* Paper grain subtle texture */
   body {
     background-image: 

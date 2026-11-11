@@ -14,6 +14,7 @@ interface BookSpreadViewProps {
   theme: ThemeMode;
   fontSizeMultiplier: number;
   onChordClick: (chord: string) => void;
+  isFittedScreen?: boolean;
 }
 
 export const BookSpreadView: React.FC<BookSpreadViewProps> = ({
@@ -25,8 +26,10 @@ export const BookSpreadView: React.FC<BookSpreadViewProps> = ({
   theme,
   fontSizeMultiplier,
   onChordClick,
+  isFittedScreen = false,
 }) => {
   const [mobileTab, setMobileTab] = useState<'both' | 'left' | 'right'>('both');
+  const [showFullEpigraph, setShowFullEpigraph] = useState<boolean>(false);
   const isDark = theme === 'stage';
 
   // Chords for right column diagrams (SOL*, RE4, DO9 from original scan)
@@ -40,36 +43,43 @@ export const BookSpreadView: React.FC<BookSpreadViewProps> = ({
     .filter((d): d is NonNullable<typeof d> => d !== null);
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-2 sm:px-6 py-4 pb-36">
-      {/* Mobile Tab Switcher */}
-      <div className="flex md:hidden items-center justify-center gap-1 mb-4 p-1 rounded-xl bg-black/5 dark:bg-white/5 border border-amber-900/15">
+    <div
+      className={`w-full max-w-7xl mx-auto transition-all ${
+        isFittedScreen ? 'px-1 sm:px-4 py-1 pb-20' : 'px-2 sm:px-6 py-4 pb-36'
+      }`}
+    >
+      {/* Vista / Canción Switcher (Disponible tanto en móvil como en escritorio para no hacer scroll) */}
+      <div className="flex items-center justify-center gap-1 mb-3 p-1 rounded-xl bg-black/5 dark:bg-white/5 border border-amber-900/15 max-w-xl mx-auto text-xs">
         <button
           onClick={() => setMobileTab('both')}
-          className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold transition-all ${
+          className={`flex-1 py-1.5 px-3 rounded-lg font-semibold transition-all ${
             mobileTab === 'both'
-              ? 'bg-amber-800 text-white shadow-sm'
+              ? 'bg-amber-800 text-white shadow-xs'
               : 'text-vintage-faded hover:text-vintage-ink dark:text-gray-300'
           }`}
+          title="Ver ambas páginas enfrentadas"
         >
-          Vista Completa (2 Páginas)
+          📖 Ambas (Pág. 19)
         </button>
         <button
           onClick={() => setMobileTab('left')}
-          className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold transition-all ${
+          className={`flex-1 py-1.5 px-3 rounded-lg font-semibold transition-all ${
             mobileTab === 'left'
-              ? 'bg-amber-800 text-white shadow-sm'
+              ? 'bg-amber-800 text-white shadow-xs'
               : 'text-vintage-faded hover:text-vintage-ink dark:text-gray-300'
           }`}
+          title="Ver solo Sueño con serpientes en 2 columnas para no scrollear"
         >
           Sueño con serpientes
         </button>
         <button
           onClick={() => setMobileTab('right')}
-          className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold transition-all ${
+          className={`flex-1 py-1.5 px-3 rounded-lg font-semibold transition-all ${
             mobileTab === 'right'
-              ? 'bg-amber-800 text-white shadow-sm'
+              ? 'bg-amber-800 text-white shadow-xs'
               : 'text-vintage-faded hover:text-vintage-ink dark:text-gray-300'
           }`}
+          title="Ver solo Playa Girón en 2 columnas para no scrollear"
         >
           Playa Girón
         </button>
@@ -77,7 +87,11 @@ export const BookSpreadView: React.FC<BookSpreadViewProps> = ({
 
       {/* Main Book Card */}
       <div
-        className={`relative rounded-2xl p-5 sm:p-8 lg:p-12 shadow-book-deep transition-all border ${
+        className={`relative rounded-2xl transition-all border ${
+          isFittedScreen
+            ? 'p-3 sm:p-6 lg:p-7 shadow-lg'
+            : 'p-5 sm:p-8 lg:p-12 shadow-book-deep'
+        } ${
           isDark
             ? 'bg-gray-900/95 border-gray-800 text-gray-100 shadow-2xl'
             : theme === 'vintage'
@@ -107,25 +121,59 @@ export const BookSpreadView: React.FC<BookSpreadViewProps> = ({
                 </h1>
               </div>
 
-              {/* Epígrafe de Bertolt Brecht */}
+              {/* Epígrafe de Bertolt Brecht (Compacto por defecto para no gastar espacio en pantalla) */}
               {leftSong.epigraph && (
-                <div className="p-3.5 rounded-xl bg-amber-500/5 dark:bg-white/5 border-l-2 border-amber-800/40 dark:border-amber-400/40 italic font-book text-vintage-faded dark:text-gray-300">
-                  <p
-                    className="whitespace-pre-line leading-relaxed"
-                    style={{ fontSize: `${13.5 * fontSizeMultiplier}px` }}
-                  >
-                    {leftSong.epigraph.quote}
-                  </p>
-                  <p className="mt-2 text-xs font-serif not-italic font-bold text-vintage-ink dark:text-gray-300">
-                    — {leftSong.epigraph.author}
-                  </p>
+                <div
+                  onClick={() => setShowFullEpigraph((prev) => !prev)}
+                  className={`rounded-xl bg-amber-500/5 dark:bg-white/5 border-l-2 border-amber-800/40 dark:border-amber-400/40 italic font-book text-vintage-faded dark:text-gray-300 cursor-pointer transition-all ${
+                    !showFullEpigraph
+                      ? 'p-2 text-xs flex items-center justify-between gap-2 mb-2'
+                      : 'p-3 text-xs sm:text-sm mb-3'
+                  }`}
+                  title="Clic para ver/ocultar epígrafe completo de Bertolt Brecht"
+                >
+                  {!showFullEpigraph ? (
+                    <>
+                      <p className="truncate">
+                        “Hay hombres que luchan un día y son buenos… Esos son los imprescindibles”.
+                      </p>
+                      <span className="font-serif not-italic font-bold text-[10px] text-vintage-ink dark:text-gray-300 whitespace-nowrap">
+                        — B. Brecht ▾
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <p
+                        className="whitespace-pre-line leading-relaxed"
+                        style={{ fontSize: `${13 * fontSizeMultiplier}px` }}
+                      >
+                        {leftSong.epigraph.quote}
+                      </p>
+                      <p className="mt-1 text-xs font-serif not-italic font-bold text-vintage-ink dark:text-gray-300">
+                        — {leftSong.epigraph.author} ▴
+                      </p>
+                    </>
+                  )}
                 </div>
               )}
 
               {/* Secciones de Sueño con Serpientes */}
-              <div className="space-y-4">
+              <div
+                className={
+                  mobileTab === 'left'
+                    ? 'columns-1 md:columns-2 gap-8 [column-fill:_balance]'
+                    : isFittedScreen
+                    ? 'space-y-2'
+                    : 'space-y-4'
+                }
+              >
                 {leftSong.sections.map((section, sIdx) => (
-                  <div key={`left-sec-${sIdx}`} className="space-y-1">
+                  <div
+                    key={`left-sec-${sIdx}`}
+                    className={`break-inside-avoid-column ${
+                      mobileTab === 'left' ? 'mb-4 space-y-0.5' : isFittedScreen ? 'space-y-0.5' : 'space-y-1'
+                    }`}
+                  >
                     {section.marker && (
                       <div className="inline-block mb-1">
                         <SectionMarker marker={section.marker} theme={theme} />
@@ -141,6 +189,7 @@ export const BookSpreadView: React.FC<BookSpreadViewProps> = ({
                         theme={theme}
                         onChordClick={onChordClick}
                         fontSizeMultiplier={fontSizeMultiplier}
+                        isCompactSpacing={isFittedScreen}
                       />
                     ))}
                   </div>
@@ -204,9 +253,22 @@ export const BookSpreadView: React.FC<BookSpreadViewProps> = ({
               {/* Letras y Diagramas en paralelo */}
               <div className="flex flex-col sm:flex-row gap-6 items-start">
                 {/* Letras de Playa Girón */}
-                <div className="flex-1 space-y-4">
+                <div
+                  className={`flex-1 ${
+                    mobileTab === 'right'
+                      ? 'columns-1 md:columns-2 gap-8 [column-fill:_balance]'
+                      : isFittedScreen
+                      ? 'space-y-2'
+                      : 'space-y-4'
+                  }`}
+                >
                   {rightSong.sections.map((section, sIdx) => (
-                    <div key={`right-sec-${sIdx}`} className="space-y-1">
+                    <div
+                      key={`right-sec-${sIdx}`}
+                      className={`break-inside-avoid-column ${
+                        mobileTab === 'right' ? 'mb-4 space-y-0.5' : isFittedScreen ? 'space-y-0.5' : 'space-y-1'
+                      }`}
+                    >
                       {section.marker && (
                         <div className="inline-block mb-1">
                           <SectionMarker marker={section.marker} theme={theme} />
@@ -222,6 +284,7 @@ export const BookSpreadView: React.FC<BookSpreadViewProps> = ({
                           theme={theme}
                           onChordClick={onChordClick}
                           fontSizeMultiplier={fontSizeMultiplier}
+                          isCompactSpacing={isFittedScreen}
                         />
                       ))}
                     </div>

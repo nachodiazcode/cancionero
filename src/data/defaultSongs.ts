@@ -426,4 +426,715 @@ export const DEFAULT_SONGS: Song[] = [
       },
     ],
   },
+  {
+    id: 'nada-nuevo-bajo-el-sol',
+    title: 'nada nuevo bajo el sol',
+    subtitle: 'Compositores: Mauricio Gustavo Durán Fernández / Francisco Javier Durán Fernández',
+    artist: 'Los Bunkers',
+    pageNumber: 21,
+    originalKey: 'F#m',
+    intro: 'F#m - C#m (x2)',
+    chords: ['F#m', 'C#m', 'E', 'Bm', 'D', 'A', 'G'],
+    sections: [
+      {
+        marker: '(VERSO 1)',
+        lines: [
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'Minutos antes de que ' },
+              { chord: 'C#m', lyric: 'den las tres' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'igual que ayer y ' },
+              { chord: 'C#m', lyric: 'antes de ayer' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'E', lyric: 'sigo mirando al techo ' },
+              { chord: 'Bm', lyric: 'una y otra vez' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'D', lyric: 'como si no tuviera ' },
+              { chord: 'C#m', lyric: 'nada más que hacer' },
+            ],
+          },
+        ],
+      },
+      {
+        marker: '(VERSO 2)',
+        lines: [
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'Yo nunca me sen' },
+              { chord: 'C#m', lyric: 'tí tan tonto' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'al menos nunca ' },
+              { chord: 'C#m', lyric: 'como tú' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'E', lyric: 'no quiero levantar sos' },
+              { chord: 'Bm', lyric: 'pechas sobre mi' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'D', lyric: 'espero que no tengas ' },
+              { chord: 'C#m', lyric: 'nada que decir' },
+            ],
+          },
+        ],
+      },
+      {
+        marker: '(CORO)',
+        lines: [
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'Lo intento todo ' },
+              { chord: 'E', lyric: 'para ser' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Bm', lyric: 'mejor de que lo fui' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'D', lyric: 'de lo que fui hasta ayer' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'No hay nada nuevo ' },
+              { chord: 'E', lyric: 'bajo el sol' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Bm', lyric: 'ni escombros de un amor' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'D', lyric: 'que pueda recoger, no tengo nada que' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'A', lyric: 'es' },
+              { chord: 'F#m', lyric: 'con' },
+              { chord: 'C#m', lyric: 'der...' },
+            ],
+          },
+          {
+            type: 'chord-only',
+            text: 'A - F#m - C#m - C#m',
+          },
+        ],
+      },
+      {
+        marker: '(VERSO 3)',
+        lines: [
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'Algunos ya no ' },
+              { chord: 'C#m', lyric: 'saben que es amar' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'se portan bien cuando ' },
+              { chord: 'C#m', lyric: 'las tratan mal' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'E', lyric: 'se miran al espejo todo el ' },
+              { chord: 'Bm', lyric: 'tiempo para ver' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'D', lyric: 'las marcas que quedaron ' },
+              { chord: 'C#m', lyric: 'presas en su piel' },
+            ],
+          },
+        ],
+      },
+      {
+        marker: '(CORO)',
+        lines: [
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'Lo intento todo ' },
+              { chord: 'E', lyric: 'para ser' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Bm', lyric: 'mejor de que lo fui' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'D', lyric: 'de lo que fui hasta ayer' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'No hay nada nuevo ' },
+              { chord: 'E', lyric: 'bajo el sol' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Bm', lyric: 'ni escombros de un amor' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'D', lyric: 'que pueda recoger, no tengo nada que' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'A', lyric: 'es' },
+              { chord: 'F#m', lyric: 'con' },
+              { chord: 'C#m', lyric: 'der...' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'A', lyric: 'no ' },
+              { chord: 'F#m', lyric: 'tengo ' },
+              { chord: 'C#m', lyric: 'nada que esconder' },
+            ],
+          },
+        ],
+      },
+      {
+        marker: '(PUENTE)',
+        lines: [
+          {
+            type: 'chord-only',
+            text: 'E - Bm - D - A',
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Bm', lyric: 'Si fuera más de frente' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'G', lyric: 'o un poco más valiente' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'no bastaría con de' },
+              { chord: 'C#m', lyric: 'jarlo todo así' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Bm', lyric: 'Rebobinar las horas' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'G', lyric: 'no es lo que más me importa' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'yo sólo cuento con que es' },
+              { chord: 'E', lyric: 'tés aquí...' },
+            ],
+          },
+        ],
+      },
+      {
+        marker: '(CORO FINAL)',
+        lines: [
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'Lo intento todo ' },
+              { chord: 'E', lyric: 'para ser' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Bm', lyric: 'mejor de que lo fui' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'D', lyric: 'de lo que fui hasta ayer' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'No hay nada nuevo ' },
+              { chord: 'E', lyric: 'bajo el sol' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Bm', lyric: 'ni escombros de un amor' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'D', lyric: 'que pueda recoger' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'A', lyric: 'no ' },
+              { chord: 'F#m', lyric: 'tengo ' },
+              { chord: 'C#m', lyric: 'nada que esconder' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'A', lyric: 'no ' },
+              { chord: 'F#m', lyric: 'tengo ' },
+              { chord: 'C#m', lyric: 'nada que esconder...' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'A', lyric: 'uu' },
+              { chord: 'F#m', lyric: 'oooh' },
+              { chord: 'C#m', lyric: 'hhhh...' },
+            ],
+          },
+          {
+            type: 'chord-only',
+            text: 'A - F#m - C#m - C#m',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'te-recuerdo-amanda',
+    title: 'te recuerdo amanda',
+    subtitle: 'Víctor Jara (Tono: G / Cifra Club con Intro Tab)',
+    artist: 'Víctor Jara',
+    pageNumber: 22,
+    originalKey: 'G',
+    intro: 'G7M - A - G6 - A - G6',
+    chords: ['G7M', 'A', 'G6', 'D', 'F#m', 'G', 'C', 'D6', 'Bm', 'Bm/F#', 'A7M', 'A7M/E', 'Em/G', 'E', 'Em'],
+    sections: [
+      {
+        marker: '[Tab - Intro - 2x]',
+        lines: [
+          { type: 'comment', text: 'Parte 1 de 3 (G7M  A)' },
+          {
+            type: 'tab',
+            text: `E|----7-----7-----0-----0-----0-------------|
+B|-------7-----5-----------5----------------|
+G|-0-----------------6----------------------|
+D|------------------------------------------|
+A|------------------------------------------|
+E|------------------------------------------|`,
+          },
+          { type: 'comment', text: 'Parte 2 de 3 (G6  A)' },
+          {
+            type: 'tab',
+            text: `E|----------------0-----0-----0-------------|
+B|----5-----5--------------5----------------|
+G|-------4-----7-----6----------------------|
+D|-5----------------------------------------|
+A|------------------------------------------|
+E|------------------------------------------|`,
+          },
+          { type: 'comment', text: 'Parte 3 de 3 (G6)' },
+          {
+            type: 'tab',
+            text: `E|----------------0-------------------------|
+B|----5-----5-------------------------------|
+G|-------4-----7----------------------------|
+D|-5----------------------------------------|
+A|------------------------------------------|
+E|------------------------------------------|`,
+          },
+        ],
+      },
+      {
+        marker: '[Estribillo]',
+        lines: [
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'D', lyric: 'Te recuerdo Amanda' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'La calle mojada' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'G', lyric: 'Corriendo a la fábrica' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'C', lyric: 'Donde traba' },
+              { chord: 'D6', lyric: 'jaba Manuel' },
+            ],
+          },
+          {
+            type: 'lyric-only',
+            text: 'La sonrisa ancha',
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'La lluvia en el pelo' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'G', lyric: 'No importaba nada' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'C', lyric: 'Ibas a encon' },
+              { chord: 'D6', lyric: 'trarte con él' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Bm', lyric: 'Con él, con él, con él, con él' },
+            ],
+          },
+        ],
+      },
+      {
+        marker: '[Primera Parte]',
+        lines: [
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Bm/F#', lyric: 'Son ' },
+              { chord: 'A', lyric: 'cinco minutos' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'A7M', lyric: 'La vida es eterna' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'A7M/E', lyric: 'En cinco ' },
+              { chord: 'Em/G', lyric: 'minutos' },
+            ],
+          },
+        ],
+      },
+      {
+        marker: '[Pré-Refrão 1]',
+        lines: [
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'A7M', lyric: 'Suena la sirena' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Em/G', lyric: 'De vuelta al ' },
+              { chord: 'A7M', lyric: 'trabajo' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Em/G', lyric: 'Y tu ca' },
+              { chord: 'F#m', lyric: 'minando lo ilu' },
+              { chord: 'G', lyric: 'minas todo' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'E', lyric: '( ' },
+              { chord: 'Em', lyric: ') ' },
+              { chord: 'G6', lyric: 'Los cinco minutos' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'E', lyric: 'Te hacen florecer' },
+            ],
+          },
+        ],
+      },
+      {
+        marker: '[Estribillo]',
+        lines: [
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'D', lyric: 'Te recuerdo Amanda' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'La calle mojada' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'G', lyric: 'Corriendo a la fábrica' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'C', lyric: 'Donde traba' },
+              { chord: 'D6', lyric: 'jaba Manuel' },
+            ],
+          },
+          {
+            type: 'lyric-only',
+            text: 'La sonrisa ancha',
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'La lluvia en el pelo' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'G', lyric: 'No importaba nada' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'C', lyric: 'Ibas a encon' },
+              { chord: 'D6', lyric: 'trarte con él' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Bm', lyric: 'Con él, con él, con él, con él' },
+            ],
+          },
+        ],
+      },
+      {
+        marker: '[Segunda Parte]',
+        lines: [
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Bm/F#', lyric: 'Que partió a ' },
+              { chord: 'A', lyric: 'la sierra' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'A7M', lyric: 'Que nunca hizo daño' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'A7M/E', lyric: 'Que partió a ' },
+              { chord: 'Em/G', lyric: 'la sierra' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'A7M', lyric: 'Y en cinco minutos' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Em/G', lyric: 'Quedó ' },
+              { chord: 'A7M', lyric: 'destro' },
+              { chord: 'Em/G', lyric: 'zado' },
+            ],
+          },
+        ],
+      },
+      {
+        marker: '[Pré-Refrão 2]',
+        lines: [
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'Suena la sirena' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'G', lyric: 'De vuelta al trabajo' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'Em', lyric: 'Muchos ' },
+              { chord: 'Em/G', lyric: 'no volvieron' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'E', lyric: 'Tampoco Manuel' },
+            ],
+          },
+        ],
+      },
+      {
+        marker: '[Estribillo Final]',
+        lines: [
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'D', lyric: 'Te recuerdo Amanda' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'F#m', lyric: 'La calle mojada' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'G', lyric: 'Corriendo a la fábrica' },
+            ],
+          },
+          {
+            type: 'lyric-chord',
+            tokens: [
+              { chord: 'C', lyric: 'Donde traba' },
+              { chord: 'D6', lyric: 'jaba Manuel' },
+            ],
+          },
+          {
+            type: 'chord-only',
+            text: 'G7M - A - G6 - A - G6',
+          },
+        ],
+      },
+      {
+        marker: '[Tab - Final]',
+        lines: [
+          { type: 'comment', text: 'Parte 1 de 3 (G7M  A)' },
+          {
+            type: 'tab',
+            text: `E|-----7-----7----7-----7-----0-----0-----0-|
+B|--------7----------7-----5-----------5----|
+G|--0----------0-----------------6----------|
+D|------------------------------------------|
+A|------------------------------------------|
+E|------------------------------------------|`,
+          },
+          { type: 'comment', text: 'Parte 2 de 3 (G6  A)' },
+          {
+            type: 'tab',
+            text: `E|----------------0-----0-----0-------------|
+B|----5-----5--------------5----------------|
+G|-------4-----7-----6----------------------|
+D|-5----------------------------------------|
+A|------------------------------------------|
+E|------------------------------------------|`,
+          },
+          { type: 'comment', text: 'Parte 3 de 3 (G6)' },
+          {
+            type: 'tab',
+            text: `E|----------------0-------------------------|
+B|----5-----5-------------------------------|
+G|-------4-----7----------------------------|
+D|-5----------------------------------------|
+A|------------------------------------------|
+E|------------------------------------------|`,
+          },
+        ],
+      },
+    ],
+  },
 ];

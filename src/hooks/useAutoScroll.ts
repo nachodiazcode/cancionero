@@ -16,6 +16,12 @@ export function useAutoScroll({ containerRef, initialSpeed = 2 }: UseAutoScrollO
     if (containerRef && containerRef.current) {
       return containerRef.current;
     }
+    if (typeof document !== 'undefined') {
+      const mainEl = document.querySelector('main');
+      if (mainEl && mainEl.scrollHeight > mainEl.clientHeight && getComputedStyle(mainEl).overflowY === 'auto') {
+        return mainEl;
+      }
+    }
     return window;
   }, [containerRef]);
 
@@ -107,12 +113,34 @@ export function useAutoScroll({ containerRef, initialSpeed = 2 }: UseAutoScrollO
     };
   }, [updateProgress]);
 
-  // Spacebar toggle (if not typing in input/textarea)
+  // Spacebar and Bluetooth Guitar Pedal stepping navigation (hands-free!)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.code === 'Space' && !(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)) {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+
+      if (e.code === 'Space') {
         e.preventDefault();
         setIsPlaying((prev) => !prev);
+      } else if (e.key === 'PageDown') {
+        e.preventDefault();
+        const target = getScrollContainer();
+        const step = window.innerHeight * 0.6;
+        if (target instanceof Window) {
+          window.scrollBy({ top: step, behavior: 'smooth' });
+        } else {
+          target.scrollBy({ top: step, behavior: 'smooth' });
+        }
+      } else if (e.key === 'PageUp') {
+        e.preventDefault();
+        const target = getScrollContainer();
+        const step = window.innerHeight * 0.6;
+        if (target instanceof Window) {
+          window.scrollBy({ top: -step, behavior: 'smooth' });
+        } else {
+          target.scrollBy({ top: -step, behavior: 'smooth' });
+        }
       }
     };
 
@@ -120,7 +148,7 @@ export function useAutoScroll({ containerRef, initialSpeed = 2 }: UseAutoScrollO
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [getScrollContainer]);
 
   const togglePlay = useCallback(() => {
     setIsPlaying((prev) => !prev);

@@ -33,7 +33,7 @@ export const OriginalFacsimileModal: React.FC<OriginalFacsimileModalProps> = ({
         <div className="flex items-center justify-between px-6 py-4 border-b border-black/10 dark:border-white/10">
           <div>
             <h3 className="font-serif font-bold text-xl sm:text-2xl">
-              Facsímil Original — Página 19
+              Facsímil Original — Archivo Histórico
             </h3>
             <p className="text-xs text-vintage-faded dark:text-gray-400">
               «Sueño con serpientes» y «Playa Girón» de Silvio Rodríguez
@@ -53,7 +53,7 @@ export const OriginalFacsimileModal: React.FC<OriginalFacsimileModalProps> = ({
           <div className="relative group rounded-xl overflow-hidden border border-black/15 shadow-inner bg-amber-950/10 flex justify-center">
             <img
               src="/cancionero-original.jpg"
-              alt="Página 19 original del cancionero"
+              alt="Página original del cancionero"
               className="max-h-[65vh] w-auto object-contain rounded shadow-lg"
             />
           </div>
@@ -64,7 +64,7 @@ export const OriginalFacsimileModal: React.FC<OriginalFacsimileModalProps> = ({
               <span>Características adaptadas al Cancionero Digital Responsive:</span>
             </div>
             <ul className="list-disc list-inside space-y-1 text-vintage-faded dark:text-gray-300 ml-2">
-              <li><strong>Acordes precisos sobre cada sílaba:</strong> Anclaje responsivo que nunca se desalinea en pantallas chicas.</li>
+              <li><strong>Acordes precisos en naranja (#e60):</strong> Anclaje responsivo sobre cada sílaba que nunca se desalinea.</li>
               <li><strong>Diagramas de trastes originales:</strong> Digitaciones exactas de SOL*, RE4 y DO9 reproducidas en SVG interactivo.</li>
               <li><strong>Auto-scroll Manos Libres:</strong> Toca tu guitarra sin tener que interrumpir la canción para scrollear.</li>
               <li><strong>Pantalla siempre encendida (Wake Lock):</strong> Evita que tu celular o tablet se apague mientras practicas.</li>

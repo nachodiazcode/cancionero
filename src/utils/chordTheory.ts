@@ -173,3 +173,99 @@ export function parseChordProLine(lineText: string): { chord?: string; lyric: st
 
   return tokens;
 }
+
+/**
+ * Checks if a line is predominantly chord symbols (LaCuerda / Cifra Club format)
+ */
+export function isChordLine(line: string): boolean {
+  const trimmed = line.trim();
+  if (!trimmed) return false;
+  // If line has brackets, it's already ChordPro
+  if (trimmed.includes('[') && trimmed.includes(']')) return false;
+  // If it looks like a tab string line (e.g. e|---, E|---, B|---)
+  if (/^[eEaAdDgGbB1-6]\|/.test(trimmed)) return false;
+
+  const words = trimmed.split(/\s+/).filter(Boolean);
+  if (words.length === 0) return false;
+
+  let chordCount = 0;
+  for (const word of words) {
+    // Strip common punctuation around chord like (F#m) or F#m, or -
+    const cleanWord = word.replace(/[(),\-]/g, '');
+    if (!cleanWord) continue;
+    if (parseChord(cleanWord) !== null) {
+      chordCount++;
+    }
+  }
+
+  return chordCount > 0 && chordCount >= Math.ceil(words.length * 0.7);
+}
+
+/**
+ * Automatically converts 2-line chord sheets (LaCuerda.net / Cifra Club) into ChordPro [Chord]Lyric
+ */
+export function convertTwoLineChordsToChordPro(rawText: string): string {
+  // If already contains brackets, don't re-convert
+  if (rawText.includes('[') && rawText.includes(']')) {
+    return rawText;
+  }
+
+  const lines = rawText.split('\n');
+  const result: string[] = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const currentLine = lines[i];
+
+    if (isChordLine(currentLine)) {
+      // Find all chords and their character column indices in this line
+      const chordMatches: { chord: string; index: number }[] = [];
+      const regex = /\S+/g;
+      let match;
+      while ((match = regex.exec(currentLine)) !== null) {
+        const word = match[0].replace(/[(),]/g, '');
+        if (parseChord(word) !== null) {
+          chordMatches.push({ chord: word, index: match.index });
+        }
+      }
+
+      const nextLine = i + 1 < lines.length ? lines[i + 1] : null;
+
+      // If next line is lyrics (not empty and not another chord line and not a section title)
+      if (
+        nextLine !== null &&
+        nextLine.trim().length > 0 &&
+        !isChordLine(nextLine) &&
+        !nextLine.trim().startsWith('(') &&
+        !/^[eEaAdDgGbB1-6]\|/.test(nextLine.trim())
+      ) {
+        // Merge chords into nextLine at character positions
+        let merged = '';
+        let lastLyricPos = 0;
+
+        for (const cm of chordMatches) {
+          const insertPos = Math.min(cm.index, nextLine.length);
+          if (insertPos > lastLyricPos) {
+            merged += nextLine.substring(lastLyricPos, insertPos);
+            lastLyricPos = insertPos;
+          }
+          merged += `[${cm.chord}]`;
+        }
+
+        if (lastLyricPos < nextLine.length) {
+          merged += nextLine.substring(lastLyricPos);
+        }
+
+        result.push(merged);
+        i++; // skip nextLine since we merged it
+      } else {
+        // Standalone chord line (e.g. Intro or instrumental: F#m C#m E Bm)
+        const bracketed = chordMatches.map((cm) => `[${cm.chord}]`).join(' ');
+        result.push(bracketed);
+      }
+    } else {
+      result.push(currentLine);
+    }
+  }
+
+  return result.join('\n');
+}
